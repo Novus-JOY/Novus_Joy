@@ -10,6 +10,13 @@ export class UsersRepository {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
+  async findByIdAndUpdateImg(id: string, fileName: string) {
+    const user = await this.userModel.findById(id);
+    user.imgUrl = `http://localhost:8000/media/${fileName}`;
+    const newUser = await user.save();
+    console.log(newUser);
+    return newUser.readOnlyData;
+  }
   async existsByEmail(email: string): Promise<boolean> {
     try {
       const result = await this.userModel.exists({ email });
