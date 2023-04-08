@@ -7,7 +7,6 @@ import { UsersRepository } from 'src/users/users.repository';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly usersRepository: UsersRepository) {
-    console.log('asdfsadfsadf');
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.JWT_SECRET,
@@ -17,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   //인증할 때 사용 디코딩 할 때?.
 
   async validate(payload: Payload) {
-    console.log('asdfdafsadfsadfwefwfwef');
+    console.log('guard Strategy');
     const user = await this.usersRepository.findUserByIdWithoutPassword(
       payload.sub,
     );
